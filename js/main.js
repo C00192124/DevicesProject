@@ -26,11 +26,16 @@ Sprite.prototype.draw = function() {
 
 
 //Creating the player
-var player = new Sprite({imagePath:"assets/survivor/shotgun/idle/survivor-idle_shotgun_0.png"});
+var player = new Sprite({imagePath:"assets/survivor/shotgun/move/survivor-move_shotgun_0_right.png"});
+var zombie = new Sprite({imagePath:"assets/zombie/move/skeleton-move_0_right.png"});
+zombie.x = canvas.width - 100;
 
 function render() {
   if(player.isLoaded) {
     ctx.drawImage(player.image, player.x, player.y)
+  }
+  if(zombie.isLoaded) {
+    ctx.drawImage(zombie.image, zombie.x, zombie.y)
   }
 }
 
@@ -40,27 +45,66 @@ function keyDownHandler(e) {
 
 	if(e.keyCode == 38) {
 
-		player.y -= 5;
+    if ((player.y) > 3) {
+		  player.y -= 3;
+      player.image.src = "assets/survivor/shotgun/move/survivor-move_shotgun_0_up.png";
+    }
 	}
 
 	if(e.keyCode == 37) {
 
-		player.x -= 5;
+    if ((player.x) > 3) {
+		  player.x -= 3;
+      player.image.src = "assets/survivor/shotgun/move/survivor-move_shotgun_0_left.png";
+    }
 	}
 
 	if(e.keyCode == 39) {
 
-		player.x += 5;
+    if ((player.x + 96) < canvas.width - 3) {
+      player.x += 3;
+      player.image.src = "assets/survivor/shotgun/move/survivor-move_shotgun_0_right.png";
+    }
 	}
 
 	if(e.keyCode == 40) {
 
-		player.y += 5;
+		if ((player.y + 96) < canvas.height - 3) {
+      player.y += 3;
+      player.image.src = "assets/survivor/shotgun/move/survivor-move_shotgun_0_down.png";
+    }
 	}
+
+  if(e.keyCode == 32) {
+
+    if(((zombie.x > player.x) && (zombie.x < player.x + 200)) && (zombie.y == player.y)) {
+      console.log("win");
+    }
+  }
+
 }
 
 function clickHandler(e) {
 
+}
+
+function zombieChase() {
+
+  if (player.x > zombie.x) {
+    zombie.x = zombie.x + 0.5;
+  }
+
+  if (player.y > zombie.y) {
+    zombie.y = zombie.y + 0.5;
+  }
+
+  if (player.x < zombie.x) {
+    zombie.x = zombie.x - 0.5;
+  }
+
+  if (player.y < zombie.y) {
+    zombie.y = zombie.y - 0.5;
+  }
 }
 
 
@@ -71,5 +115,6 @@ function main() {
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   render();
+  zombieChase();
 
 }
