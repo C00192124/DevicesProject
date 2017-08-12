@@ -1,12 +1,12 @@
-//Loading in a Sprite
-function Sprite(options) {
+//Loading in a Player
+function Player(options) {
   this.load(options.imagePath);
-  this.x = 0;
-  this.y = 50;
+  this.x = app.canvas.width/2;
+  this.y = app.canvas.height/2;
   this.isLoaded = false;
 }
 
-Sprite.prototype.load = function(imagePath) {
+Player.prototype.load = function(imagePath) {
   this.image = new Image();
   var that = this;
   this.image.src = imagePath;
@@ -15,6 +15,6 @@ Sprite.prototype.load = function(imagePath) {
   }
 };
 
-Sprite.prototype.draw = function() {
+Player.prototype.draw = function() {
   ctx.drawImage(this.image, this.x, this.y);
 }

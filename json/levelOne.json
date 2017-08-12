@@ -1,6 +1,30 @@
 {
-  "playerStart": {"x":50, "y":50},
+  "emptyFloor": {"p": true, "n":0},
+  "stumpFloor": {"p":false, "n":1},
+  "flowerFloor": {"p":true, "n":2},
+  "bFlowerFloor": {"p":false, "n":3},
+  "stoneFloor": {"p":false, "n":4},
   "levelData": [
-    
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    []
   ]
 }
