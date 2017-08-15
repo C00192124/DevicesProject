@@ -15,7 +15,7 @@ Zombie.prototype.load = function(imagePath) {
 }
 
 Zombie.prototype.draw = function() {
-  ctx.drawImage(this.image, this.x, this.y);
+  app.ctx.drawImage(this.image, this.x, this.y);
 }
 
 Zombie.prototype.zombieChase = function() {
