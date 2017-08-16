@@ -39,25 +39,26 @@ Player.prototype.draw = function() {
 }
 
 Player.prototype.move = function() {
+
   if(38 in keysDown) {
 
-    if ((app.player.y) > 2) {
-  		 app.player.y -= 2;
+    if ((app.player.y) > 50) {
+  		app.player.y -= 2;
       app.player.image.src = "assets/survivor/move_up.png";
     }
   }
 
   if(37 in keysDown) {
 
-    if ((app.player.x) > 2) {
-  		 app.player.x -= 2;
+    if ((app.player.x) > 50) {
+  		app.player.x -= 2;
       app.player.image.src = "assets/survivor/move_left.png";
     }
   }
 
   if(39 in keysDown) {
 
-    if ((app.player.x + 64) < app.canvas.width - 2) {
+    if ((app.player.x + 64) < app.canvas.width - 50) {
       app.player.x += 2;
       app.player.image.src = "assets/survivor/move_right.png";
     }
@@ -65,7 +66,7 @@ Player.prototype.move = function() {
 
   if(40 in keysDown) {
 
-  	if ((app.player.y + 64) < app.canvas.height - 2) {
+  	if ((app.player.y + 64) < app.canvas.height - 50) {
       app.player.y += 2;
       app.player.image.src = "assets/survivor/move_down.png";
     }

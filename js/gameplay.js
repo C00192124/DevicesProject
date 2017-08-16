@@ -1,23 +1,18 @@
 var player;
 var zombie;
 var level = {
-  "emptyFloor": true,
-  "stumpFloor": false,
-  "flowerFloor": true,
-  "bFlowerFloor": true,
-  "stoneFloor": false,
   "levelData": [
-    ["stoneFloor","stoneFloor","stoneFloor","stoneFloor","stoneFloor","stoneFloor","stoneFloor","stoneFloor","stoneFloor","stoneFloor","stoneFloor"],
+    ["stoneFloor","stoneFloor","stoneFloor","stoneFloor","stoneFloor","stumpFloor","stumpFloor","stoneFloor","stumpFloor","stoneFloor","stoneFloor"],
     ["stoneFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","flowerFloor","emptyFloor","emptyFloor","emptyFloor","stoneFloor"],
-    ["stoneFloor","emptyFloor","emptyFloor","bFlowerFloor","emptyFloor","flowerFloor","emptyFloor","stumpFloor","emptyFloor","emptyFloor","stoneFloor"],
-    ["stoneFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","stoneFloor"],
-    ["stoneFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","stumpFloor","emptyFloor","flowerFloor","emptyFloor","emptyFloor","stoneFloor"],
-    ["stoneFloor","flowerFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","stoneFloor"],
+    ["stoneFloor","emptyFloor","emptyFloor","bFlowerFloor","emptyFloor","flowerFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","stoneFloor"],
+    ["stumpFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","stoneFloor"],
+    ["stoneFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","flowerFloor","emptyFloor","emptyFloor","stoneFloor"],
+    ["stoneFloor","flowerFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","stumpFloor"],
     ["stoneFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","bFlowerFloor","emptyFloor","stoneFloor"],
     ["stoneFloor","emptyFloor","emptyFloor","flowerFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","stoneFloor"],
     ["stoneFloor","emptyFloor","bFlowerFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","stoneFloor"],
-    ["stoneFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","stumpFloor","emptyFloor","emptyFloor","flowerFloor","emptyFloor","stoneFloor"],
-    ["stoneFloor","stoneFloor","stoneFloor","stoneFloor","stoneFloor","stoneFloor","stoneFloor","stoneFloor","stoneFloor","stoneFloor","stoneFloor"]
+    ["stumpFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","flowerFloor","emptyFloor","stoneFloor"],
+    ["stoneFloor","stoneFloor","stoneFloor","stoneFloor","stumpFloor","stoneFloor","stoneFloor","stoneFloor","stoneFloor","stoneFloor","stumpFloor"]
   ]
 }
 var stoneFloorImg;
