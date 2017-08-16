@@ -1,4 +1,6 @@
 var keysDown = {};
+var frame = 0;
+var prevTime = Date.now();
 
 addEventListener("keydown", function(e) {
   keysDown[e.keyCode] = true;
@@ -25,7 +27,15 @@ Player.prototype.load = function(imagePath) {
 };
 
 Player.prototype.draw = function() {
-  app.ctx.drawImage(this.image, this.x, this.y);
+
+  if((Date.now() - prevTime) > 100) {
+    if(frame === 6) {
+      frame = 0;
+    }
+    frame+= 1;
+    prevTime = Date.now();
+  }
+  app.ctx.drawImage(this.image, frame*64, 0, 64, 64, this.x, this.y, 64, 64);
 }
 
 Player.prototype.move = function() {
@@ -33,7 +43,7 @@ Player.prototype.move = function() {
 
     if ((app.player.y) > 2) {
   		 app.player.y -= 2;
-      app.player.image.src = "assets/survivor/shotgun/move/survivor-move_shotgun_0_up.png";
+      app.player.image.src = "assets/survivor/move_up.png";
     }
   }
 
@@ -41,23 +51,23 @@ Player.prototype.move = function() {
 
     if ((app.player.x) > 2) {
   		 app.player.x -= 2;
-      app.player.image.src = "assets/survivor/shotgun/move/survivor-move_shotgun_0_left.png";
+      app.player.image.src = "assets/survivor/move_left.png";
     }
   }
 
   if(39 in keysDown) {
 
-    if ((app.player.x + 96) < app.canvas.width - 2) {
+    if ((app.player.x + 64) < app.canvas.width - 2) {
       app.player.x += 2;
-      app.player.image.src = "assets/survivor/shotgun/move/survivor-move_shotgun_0_right.png";
+      app.player.image.src = "assets/survivor/move_right.png";
     }
   }
 
   if(40 in keysDown) {
 
-  	if ((app.player.y + 96) < app.canvas.height - 2) {
+  	if ((app.player.y + 64) < app.canvas.height - 2) {
       app.player.y += 2;
-      app.player.image.src = "assets/survivor/shotgun/move/survivor-move_shotgun_0_down.png";
+      app.player.image.src = "assets/survivor/move_down.png";
     }
   }
 
@@ -79,5 +89,5 @@ Player.prototype.move = function() {
       app.zombie.isLoaded = false;
     }
   }*/
-  
+
 }

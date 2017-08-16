@@ -2,6 +2,7 @@ app = {};
 var canvas;
 var game;
 var ctx;
+var play = true;
 
 function init() {
   app.canvas = document.getElementById('myCanvas');
@@ -15,7 +16,14 @@ setInterval(main, 16);
 function main() {
 
   app.ctx.clearRect(0, 0, app.canvas.width, app.canvas.height);
-  app.game.draw();
-  app.game.update();
+  if(!play) {
+
+  }
+  else if(play) {
+
+    app.game.update();
+    app.game.draw();
+    
+  }
 
 }
