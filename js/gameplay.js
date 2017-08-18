@@ -1,5 +1,8 @@
 var player;
 var zombie;
+var zomInit;
+var timer;
+var spawn;
 var level = {
   "levelData": [
     ["stoneFloor","stoneFloor","stoneFloor","stoneFloor","stoneFloor","stumpFloor","stumpFloor","stoneFloor","stumpFloor","stoneFloor","stoneFloor"],
@@ -22,9 +25,14 @@ var emptyFloorImg;
 var stumpFloorImg;
 
 function Gameplay() {
+
+  app.zombie = [];
+
   //Creating the player
-  app.player = new Player({imagePath:"assets/survivor/move_right.png"});
-  app.zombie = new Zombie({imagePath:"assets/zombie/move/skeleton-move_0_right.png"});
+  app.player = new Player({imagePath:"assets/survivor/move/move_right.png"});
+  this.spawn = true;
+
+  //Load images for background
   app.stoneFloorImg = new Image();
   app.stumpFloorImg = new Image();
   app.flowerFloorImg = new Image();
@@ -35,12 +43,22 @@ function Gameplay() {
   app.flowerFloorImg.src = "assets/forest/flowerFloor.png";
   app.bFlowerFloorImg.src = "assets/forest/bFlowerFloor.png";
   app.stumpFloorImg.src = "assets/forest/stumpFloor.png";
-  app.zombie.x = app.canvas.width - 100;
 }
 
 Gameplay.prototype.update = function() {
-  app.zombie.zombieChase();
+
+  for(i = 0; i < app.zombie.length; i++) {
+    app.zombie[i].zombieChase();
+  }
   app.player.move();
+
+  if(this.timer < 480) {
+    this.timer++;
+  }
+  else {
+    this.pushZombie();
+    this.timer = 0;
+  }
 }
 
 Gameplay.prototype.draw = function() {
@@ -67,7 +85,25 @@ Gameplay.prototype.draw = function() {
   if(app.player.isLoaded) {
     app.player.draw();
   }
-  if(app.zombie.isLoaded) {
-    app.zombie.draw();
+
+  for(i = 0; i < app.zombie.length; i++) {
+    if(app.zombie[i].isLoaded) {
+      app.zombie[i].draw();
+    }
   }
+}
+
+Gameplay.prototype.pushZombie = function() {
+
+  app.zomInit = new Zombie();
+  if(this.spawn) {
+    app.zomInit.init({imagePath:"assets/zombie/move/move_right.png",x:64,y:64});
+    this.spawn = false;
+  }
+  else {
+    app.zomInit.init({imagePath:"assets/zombie/move/move_left.png", x:app.canvas.width - 128, y:app.canvas.height - 128});
+    this.spawn = true;
+  }
+  app.zombie.push(app.zomInit);
+
 }

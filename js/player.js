@@ -1,13 +1,39 @@
 var keysDown = {};
 var frame = 0;
 var prevTime = Date.now();
+var double;
+var releaseTime;
 
 addEventListener("keydown", function(e) {
   keysDown[e.keyCode] = true;
 }, false);
+
 addEventListener("keyup", function(e) {
   delete keysDown[e.keyCode];
 }, false);
+
+addEventListener("touchstart", function (e) {
+  if(((Date.now() - this.releaseTime) < 300)) {
+    //Code for double tap
+    console.log("double");
+  }
+  else if (((Date.now() - this.releaseTime) > 300)){
+    //Code for single tap
+    console.log("single");
+  }
+}, false);
+
+addEventListener("touchend", function (e) {
+  this.releaseTime = Date.now();
+}, false);
+
+function handleStart() {
+
+}
+
+function handleEnd() {
+
+}
 
 //Loading in a Player
 function Player(options) {
@@ -36,6 +62,7 @@ Player.prototype.draw = function() {
     prevTime = Date.now();
   }
   app.ctx.drawImage(this.image, frame*64, 0, 64, 64, this.x, this.y, 64, 64);
+
 }
 
 Player.prototype.move = function() {
@@ -44,7 +71,7 @@ Player.prototype.move = function() {
 
     if ((app.player.y) > 50) {
   		app.player.y -= 2;
-      app.player.image.src = "assets/survivor/move_up.png";
+      app.player.image.src = "assets/survivor/move/move_up.png";
     }
   }
 
@@ -52,7 +79,7 @@ Player.prototype.move = function() {
 
     if ((app.player.x) > 50) {
   		app.player.x -= 2;
-      app.player.image.src = "assets/survivor/move_left.png";
+      app.player.image.src = "assets/survivor/move/move_left.png";
     }
   }
 
@@ -60,7 +87,7 @@ Player.prototype.move = function() {
 
     if ((app.player.x + 64) < app.canvas.width - 50) {
       app.player.x += 2;
-      app.player.image.src = "assets/survivor/move_right.png";
+      app.player.image.src = "assets/survivor/move/move_right.png";
     }
   }
 
@@ -68,7 +95,7 @@ Player.prototype.move = function() {
 
   	if ((app.player.y + 64) < app.canvas.height - 50) {
       app.player.y += 2;
-      app.player.image.src = "assets/survivor/move_down.png";
+      app.player.image.src = "assets/survivor/move/move_down.png";
     }
   }
 
