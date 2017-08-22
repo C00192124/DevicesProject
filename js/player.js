@@ -1,8 +1,9 @@
 var keysDown = {};
 var frame = 0;
+var timerB = false;
 var prevTime = Date.now();
-var double;
-var releaseTime;
+var timer = 0;
+var direction;
 
 addEventListener("keydown", function(e) {
   keysDown[e.keyCode] = true;
@@ -13,27 +14,12 @@ addEventListener("keyup", function(e) {
 }, false);
 
 addEventListener("touchstart", function (e) {
-  if(((Date.now() - this.releaseTime) < 300)) {
-    //Code for double tap
-    console.log("double");
-  }
-  else if (((Date.now() - this.releaseTime) > 300)){
-    //Code for single tap
-    console.log("single");
-  }
+
 }, false);
 
 addEventListener("touchend", function (e) {
-  this.releaseTime = Date.now();
+
 }, false);
-
-function handleStart() {
-
-}
-
-function handleEnd() {
-
-}
 
 //Loading in a Player
 function Player(options) {
@@ -69,53 +55,66 @@ Player.prototype.move = function() {
 
   if(38 in keysDown) {
 
-    if ((app.player.y) > 50) {
-  		app.player.y -= 2;
-      app.player.image.src = "assets/survivor/move/move_up.png";
+    if ((this.y) > 50) {
+  		this.y -= 2;
+      this.image.src = "assets/survivor/move/move_up.png";
+      this.direction = 0;
     }
   }
 
   if(37 in keysDown) {
 
-    if ((app.player.x) > 50) {
-  		app.player.x -= 2;
-      app.player.image.src = "assets/survivor/move/move_left.png";
+    if ((this.x) > 50) {
+  		this.x -= 2;
+      this.image.src = "assets/survivor/move/move_left.png";
+      this.direction = 1;
     }
   }
 
   if(39 in keysDown) {
 
-    if ((app.player.x + 64) < app.canvas.width - 50) {
-      app.player.x += 2;
-      app.player.image.src = "assets/survivor/move/move_right.png";
+    if ((this.x + 64) < app.canvas.width - 50) {
+      this.x += 2;
+      this.image.src = "assets/survivor/move/move_right.png";
+      this.direction = 3;
     }
   }
 
   if(40 in keysDown) {
 
-  	if ((app.player.y + 64) < app.canvas.height - 50) {
-      app.player.y += 2;
-      app.player.image.src = "assets/survivor/move/move_down.png";
+  	if ((this.y + 64) < app.canvas.height - 50) {
+      this.y += 2;
+      this.image.src = "assets/survivor/move/move_down.png";
+      this.direction = 2;
     }
   }
 
-  /*if(32 in keysDown) {
+  if(32 in keysDown) {
 
-    if(((app.zombie.x > app.player.x) && (app.zombie.x < app.player.x + 200)) && (app.zombie.y == app.player.y)) {
-      app.zombie.isLoaded = false;
+    for(i = 0; i < app.zombie.length; i++) {
+
+      if(((app.zombie[i].x > this.x) && (app.zombie[i].x < this.x + 200)) && (app.zombie[i].y == this.y)
+        && (this.direction === 3)) {
+        app.zombie[i].isLoaded = false;
+        app.zombie.splice(i,1);
+      }
+
+      else if(((app.zombie[i].y > this.y) && (app.zombie[i].y < this.y + 200)) && (app.zombie[i].x == this.x)
+        && (this.direction === 2)) {
+        app.zombie[i].isLoaded = false;
+        app.zombie.splice(i,1);
+      }
+
+      else if(((app.zombie[i].x < this.x) && (app.zombie[i].x > this.x - 200)) && (app.zombie[i].y == this.y)
+        && (this.direction === 1)) {
+        app.zombie[i].isLoaded = false;
+        app.zombie.splice(i,1);
+      }
+
+      else if(((app.zombie[i].y < this.y) && (app.zombie[i].y > this.y - 200)) && (app.zombie[i].x == this.x)
+        && (this.direction === 0)) {
+        app.zombie.splice(i,1);
+      }
     }
-
-    if(((app.zombie.y > app.player.y) && (app.zombie.y < app.player.y + 200)) && (app.zombie.x == app.player.x)) {
-      app.zombie.isLoaded = false;
-    }
-
-    if(((app.zombie.x < app.player.x) && (app.zombie.x > app.player.x - 200)) && (app.zombie.y == app.player.y)) {
-      app.zombie.isLoaded = false;
-    }
-
-    if(((app.zombie.y < app.player.y) && (app.zombie.y > app.player.y - 200)) && (app.zombie.x == app.player.x)) {
-      app.zombie.isLoaded = false;
-    }
-  }*/
-
+  }
 }

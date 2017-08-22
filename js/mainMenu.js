@@ -7,6 +7,7 @@ var optionsSwitch = false;
 var exit;
 var exitP;
 var exitSwitch = false;
+var back;
 
 document.addEventListener("keydown", update);
 
@@ -24,6 +25,8 @@ function MainMenu() {
   this.exit.src = "assets/menu/exit.png";
   this.exitP = new Image();
   this.exitP.src = "assets/menu/exitP.png";
+  this.back = new Image();
+  this.back.src = "assets/menu/menuBack.png";
 
 }
 
@@ -65,13 +68,27 @@ function update(e) {
   }
   else if(e.keyCode === 13) {
     if(playSwitch) {
-      app.playGame = true;
+      playGame = true;
+      bOptions = false;
+      bMenu = false;
+    }
+    else if(exitSwitch) {
+      if(confirm("Exit Game")) {
+        close();
+      }
+    }
+    else if(optionsSwitch) {
+      bOptions = true;
+      bMenu = false;
+      playGame = false;
     }
   }
 
 }
 
 MainMenu.prototype.draw = function() {
+
+  app.ctx.drawImage(this.back,0,0);
 
   //Play button
   if (playSwitch) {
