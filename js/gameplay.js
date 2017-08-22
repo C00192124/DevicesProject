@@ -23,6 +23,11 @@ var flowerFloorImg;
 var bFlowerFloorImg;
 var emptyFloorImg;
 var stumpFloorImg;
+var leftArrow;
+var rightArrow;
+var downArrow;
+var upArrow;
+var shoot;
 
 function Gameplay() {
 
@@ -38,11 +43,21 @@ function Gameplay() {
   app.flowerFloorImg = new Image();
   app.bFlowerFloorImg = new Image();
   app.emptyFloorImg = new Image();
+  app.leftArrow = new Image();
+  app.upArrow = new Image();
+  app.rightArrow = new Image();
+  app.downArrow = new Image();
+  app.shoot = new Image();
   app.stoneFloorImg.src = "assets/forest/stoneFloor.png";
   app.emptyFloorImg.src = "assets/forest/emptyFloor.png";
   app.flowerFloorImg.src = "assets/forest/flowerFloor.png";
   app.bFlowerFloorImg.src = "assets/forest/bFlowerFloor.png";
   app.stumpFloorImg.src = "assets/forest/stumpFloor.png";
+  app.leftArrow.src = "assets/menu/leftArrow.png";
+  app.upArrow.src = "assets/menu/upArrow.png";
+  app.rightArrow.src = "assets/menu/rightArrow.png";
+  app.downArrow.src = "assets/menu/downArrow.png";
+  app.shoot.src = "assets/menu/shoot.png";
 }
 
 Gameplay.prototype.update = function() {
@@ -91,6 +106,13 @@ Gameplay.prototype.draw = function() {
       app.zombie[i].draw();
     }
   }
+
+  app.ctx.drawImage(app.upArrow, 64, app.canvas.height - 128);
+  app.ctx.drawImage(app.downArrow, 64, app.canvas.height - 64);
+  app.ctx.drawImage(app.leftArrow, 0, app.canvas.height - 64);
+  app.ctx.drawImage(app.rightArrow, 128, app.canvas.height - 64);
+  app.ctx.drawImage(app.shoot, app.canvas.width - 128, app.canvas.height - 64);
+
 }
 
 Gameplay.prototype.pushZombie = function() {
