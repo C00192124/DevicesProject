@@ -28,6 +28,7 @@ var rightArrow;
 var downArrow;
 var upArrow;
 var shoot;
+var livesNo;
 
 function Gameplay() {
 
@@ -36,6 +37,7 @@ function Gameplay() {
   //Creating the player
   app.player = new Player({imagePath:"assets/survivor/move/move_right.png"});
   this.spawn = true;
+  this.livesNo = 100;
 
   //Load images for background
   app.stoneFloorImg = new Image();
@@ -76,6 +78,19 @@ Gameplay.prototype.update = function() {
   }
 }
 
+Gameplay.prototype.collision = function() {
+
+  for(i = 0; i < app.zombie.length; i++) {
+
+    if((app.zombie[i].x < app.player.x + 50) && (app.zombie[i].x + 50 > app.player.x)
+      && (app.zombie[i].y < app.player.y + 50) && (app.zombie[i].y + 50 > app.player.y)) {
+
+        this.livesNo -= 0.1;
+      }
+  }
+
+}
+
 Gameplay.prototype.draw = function() {
 
   for(i=0;i<11;i++) {
@@ -112,6 +127,12 @@ Gameplay.prototype.draw = function() {
   app.ctx.drawImage(app.leftArrow, 0, app.canvas.height - 64);
   app.ctx.drawImage(app.rightArrow, 128, app.canvas.height - 64);
   app.ctx.drawImage(app.shoot, app.canvas.width - 128, app.canvas.height - 64);
+
+  app.ctx.fillStyle = "rgb(255, 255, 255)";
+  app.ctx.font = "56px Roboto";
+  app.ctx.textAlign = "left";
+  app.ctx.textBaseline = "top";
+  app.ctx.fillText("" + Math.round(this.livesNo), 0,0);
 
 }
 

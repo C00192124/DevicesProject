@@ -32,6 +32,7 @@ function MainMenu() {
 
 function update(e) {
 
+if(bMenu){
   if(e.keyCode === 38) {
     if (playSwitch){
       playSwitch = false;
@@ -68,9 +69,8 @@ function update(e) {
   }
   else if(e.keyCode === 13) {
     if(playSwitch) {
-      playGame = true;
-      bOptions = false;
       bMenu = false;
+      bTutorialMenu = true;
     }
     else if(exitSwitch) {
       if(confirm("Exit Game")) {
@@ -80,10 +80,9 @@ function update(e) {
     else if(optionsSwitch) {
       bOptions = true;
       bMenu = false;
-      playGame = false;
     }
   }
-
+ }
 }
 
 MainMenu.prototype.draw = function() {

@@ -93,25 +93,25 @@ Player.prototype.move = function() {
 
     for(i = 0; i < app.zombie.length; i++) {
 
-      if(((app.zombie[i].x > this.x) && (app.zombie[i].x < this.x + 200)) && (app.zombie[i].y == this.y)
+      if(((app.zombie[i].x > this.x) && (app.zombie[i].x < this.x + 125)) && (app.zombie[i].y == this.y)
         && (this.direction === 3)) {
         app.zombie[i].isLoaded = false;
         app.zombie.splice(i,1);
       }
 
-      else if(((app.zombie[i].y > this.y) && (app.zombie[i].y < this.y + 200)) && (app.zombie[i].x == this.x)
+      else if(((app.zombie[i].y > this.y) && (app.zombie[i].y < this.y + 125)) && (app.zombie[i].x == this.x)
         && (this.direction === 2)) {
         app.zombie[i].isLoaded = false;
         app.zombie.splice(i,1);
       }
 
-      else if(((app.zombie[i].x < this.x) && (app.zombie[i].x > this.x - 200)) && (app.zombie[i].y == this.y)
+      else if(((app.zombie[i].x < this.x) && (app.zombie[i].x > this.x - 125)) && (app.zombie[i].y == this.y)
         && (this.direction === 1)) {
         app.zombie[i].isLoaded = false;
         app.zombie.splice(i,1);
       }
 
-      else if(((app.zombie[i].y < this.y) && (app.zombie[i].y > this.y - 200)) && (app.zombie[i].x == this.x)
+      else if(((app.zombie[i].y < this.y) && (app.zombie[i].y > this.y - 125)) && (app.zombie[i].x == this.x)
         && (this.direction === 0)) {
         app.zombie.splice(i,1);
       }

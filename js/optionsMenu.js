@@ -27,6 +27,7 @@ function OptionsMenu() {
 
 function update(e) {
 
+if(bOptions){
   if(e.keyCode === 37) {
     if(volSwitch) {
       volSwitch = false;
@@ -54,6 +55,11 @@ function update(e) {
     }
   }
 
+  if(e.keyCode === 27) {
+    bOptions = false;
+    bMenu = true;
+  }
+ }
 }
 
 OptionsMenu.prototype.draw = function() {
@@ -75,5 +81,9 @@ OptionsMenu.prototype.draw = function() {
 	app.ctx.textAlign = "center";
 	app.ctx.textBaseline = "middle";
 	app.ctx.fillText("" + volumeNo, app.canvas.width / 2, ((app.canvas.height / 3) * 2));
+
+	app.ctx.textAlign = "left";
+	app.ctx.textBaseline = "top";
+	app.ctx.fillText("Esc to Exit", 0, 0);
 
 }
