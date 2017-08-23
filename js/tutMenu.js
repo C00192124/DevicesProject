@@ -46,11 +46,14 @@ if(bTutorialMenu) {
 
   if(e.keyCode === 13) {
       if(tutSwitch && bTutorialMenu) {
-        //bTutorialMenu = false;
-        //playGame = true;
+        bTutorialMenu = false;
+        playGame = true;
       }
       else if (!tutSwitch && bTutorialMenu){
-        //bTutorialMenu = false;
+        if(confirm("Proceed to tutorial?")) {
+          bTutorialMenu = false;
+          bTutorial = true;
+        }
       }
   }
 

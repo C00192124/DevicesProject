@@ -9,6 +9,7 @@ var bMenu;
 var playGame;
 var bOptions;
 var bTutorialMenu;
+var bTutorial;
 
 function init() {
   app.canvas = document.getElementById('myCanvas');
@@ -17,10 +18,12 @@ function init() {
   app.menu = new MainMenu();
   app.optMenu = new OptionsMenu();
   app.tutorialMenu = new TutMenu();
+  app.tutorial = new Tutorial();
   this.bMenu = true;
   this.playGame = false;
   this.bOptions = false;
   this.bTutorialMenu = false;
+  this.bTutorial = false;
 }
 
 //Game loop
@@ -49,6 +52,13 @@ function main() {
   else if(bTutorialMenu) {
 
     app.tutorialMenu.draw();
+
+  }
+  else if(bTutorial) {
+
+    app.tutorial.collision();
+    app.tutorial.update();
+    app.tutorial.draw();
 
   }
 

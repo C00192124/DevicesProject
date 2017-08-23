@@ -29,6 +29,7 @@ var downArrow;
 var upArrow;
 var shoot;
 var livesNo;
+var levelTwo = false;
 
 function Gameplay() {
 
@@ -64,6 +65,7 @@ function Gameplay() {
 
 Gameplay.prototype.update = function() {
 
+if(!levelTwo){
   for(i = 0; i < app.zombie.length; i++) {
     app.zombie[i].zombieChase();
   }
@@ -76,10 +78,12 @@ Gameplay.prototype.update = function() {
     this.pushZombie();
     this.timer = 0;
   }
+ }
 }
 
 Gameplay.prototype.collision = function() {
 
+if(!levelTwo){
   for(i = 0; i < app.zombie.length; i++) {
 
     if((app.zombie[i].x < app.player.x + 50) && (app.zombie[i].x + 50 > app.player.x)
@@ -88,11 +92,12 @@ Gameplay.prototype.collision = function() {
         this.livesNo -= 0.1;
       }
   }
-
+ }
 }
 
 Gameplay.prototype.draw = function() {
 
+if(!levelTwo){
   for(i=0;i<11;i++) {
     for(j=0;j<11;j++) {
       if(level.levelData[i][j] === "stoneFloor") {
@@ -133,6 +138,12 @@ Gameplay.prototype.draw = function() {
   app.ctx.textAlign = "left";
   app.ctx.textBaseline = "top";
   app.ctx.fillText("" + Math.round(this.livesNo), 0,0);
+
+ }
+ else {
+
+
+ }
 
 }
 
