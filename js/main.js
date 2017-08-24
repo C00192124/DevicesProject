@@ -24,6 +24,7 @@ function init() {
   this.bOptions = false;
   this.bTutorialMenu = false;
   this.bTutorial = false;
+
 }
 
 //Game loop

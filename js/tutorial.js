@@ -1,5 +1,5 @@
 var player;
-var zombie;
+var tutZombie;
 var level = {
   "levelData": [
     ["stoneFloor","stoneFloor","stoneFloor","stoneFloor","stoneFloor","stumpFloor","stumpFloor","stoneFloor","stumpFloor","stoneFloor","stoneFloor"],
@@ -20,25 +20,34 @@ var flowerFloorImg;
 var bFlowerFloorImg;
 var emptyFloorImg;
 var stumpFloorImg;
-var leftArrow;
-var rightArrow;
-var downArrow;
-var upArrow;
-var shoot;
 var livesNo;
 var timer;
-var allowTimer;
-var allowMove;
+var rightPress = false;
+var leftPress = false;
+var upPress = false;
+var downPress = false;
+var allowMove = false;
+var advance = false;
+var advanced = false;
+
+addEventListener("keydown", function(e) {
+  if(allowMove && e.keyCode === 39 && bTutorial){ rightPress = true }
+  if(allowMove && e.keyCode === 37 && bTutorial){ leftPress = true }
+  if(allowMove && e.keyCode === 40 && bTutorial){ downPress = true }
+  if(allowMove && e.keyCode === 38 && bTutorial){ upPress = true }
+  if(e.keyCode === 27) {
+    bTutorial = false;
+    bMenu = true;
+  }
+}, false);
 
 function Tutorial() {
 
   //Creating the player
   this.player = new Player({imagePath:"assets/survivor/move/move_right.png"});
-  this.zombie = new Zombie();
+  app.tutZombie = new Zombie();
   this.livesNo = 100;
   this.timer = 0;
-  allowTimer = true;
-  allowMove = false;
 
   //Load images for background
   this.stoneFloorImg = new Image();
@@ -46,42 +55,70 @@ function Tutorial() {
   this.flowerFloorImg = new Image();
   this.bFlowerFloorImg = new Image();
   this.emptyFloorImg = new Image();
-  this.leftArrow = new Image();
-  this.upArrow = new Image();
-  this.rightArrow = new Image();
-  this.downArrow = new Image();
-  this.shoot = new Image();
   this.stoneFloorImg.src = "assets/forest/stoneFloor.png";
   this.emptyFloorImg.src = "assets/forest/emptyFloor.png";
   this.flowerFloorImg.src = "assets/forest/flowerFloor.png";
   this.bFlowerFloorImg.src = "assets/forest/bFlowerFloor.png";
   this.stumpFloorImg.src = "assets/forest/stumpFloor.png";
-  this.leftArrow.src = "assets/menu/leftArrow.png";
-  this.upArrow.src = "assets/menu/upArrow.png";
-  this.rightArrow.src = "assets/menu/rightArrow.png";
-  this.downArrow.src = "assets/menu/downArrow.png";
-  this.shoot.src = "assets/menu/shoot.png";
 }
 
 Tutorial.prototype.update = function() {
 
-  if(allowTimer) {
-    this.timer++;
-  }
+  this.timer++;
 
   if(allowMove){
     this.player.move();
   }
 
-  if(this.zombie.isLoaded) {
-    this.zombie.zombieChase();
+  if(this.timer > 0 && this.timer < 180 && !advance) {
+    this.tutText = "Welcome To Bootcamp";
   }
+  if(this.timer > 180 && this.timer < 360 && !advance) {
+    this.tutText = "This Is Where You Will Learn To Survive";
+  }
+  if(this.timer > 360 && this.timer < 480 && !advance) {
+    this.tutText = "First Things First,";
+  }
+  if(this.timer > 480 && !advance) {
+    this.tutText = "Press Right/Left To Move Horizontally";
+    allowMove = true;
+  }
+  if(this.timer > 600 && rightPress && leftPress && !advance) {
+    this.tutText = "Press Up/Down To Move Vertically";
+  }
+  if(rightPress && leftPress && upPress && downPress && !advance) {
+    advance = true;
+    this.timer = 1020;
+  }
+  if(this.timer > 1020 && advance && this.timer < 1200) {
+    this.tutText = "Step Two: Learn To Kill";
+    app.tutZombie.init({imagePath:"assets/zombie/move/move_down.png",x:app.canvas.width/2,y:128});
+  }
+  if(this.timer > 1200 && advance && this.timer < 1400) {
+    this.tutText = "This Is A Zombie, This One Is Harmless";
+  }
+  if(this.timer > 1400 && advance && this.timer < 1600) {
+    this.tutText = "Unless You Walk Into It Of Course";
+  }
+  if(this.timer > 1600 && advance && this.timer < 1800) {
+    this.tutText = "Kill It By Pressing Spacebar To Shoot";
+  }
+  if(this.timer > 1800 && advance && this.timer < 2000) {
+    this.tutText = "You Must Be Facing It And Be Close Enough";
+  }
+  if(this.timer > 2000 && advance && !app.tutZombie.isLoaded && this.timer < 2200) {
+    this.tutText = "Well Done You Have Completed Boot Camp";
+  }
+  if(this.timer > 2200 && advance && !app.tutZombie.isLoaded) {
+    this.tutText = "Press Esc To Return To The Menu";
+  }
+
 }
 
 Tutorial.prototype.collision = function() {
 
-  if((this.zombie.x < this.player.x + 50) && (this.zombie.x + 50 > this.player.x)
-    && (this.zombie.y < this.player.y + 50) && (this.zombie.y + 50 > this.player.y)) {
+  if((app.tutZombie.x < this.player.x + 50) && (app.tutZombie.x + 50 > this.player.x)
+    && (app.tutZombie.y < this.player.y + 50) && (app.tutZombie.y + 50 > this.player.y)) {
 
       this.livesNo -= 0.1;
     }
@@ -113,8 +150,8 @@ Tutorial.prototype.draw = function() {
     this.player.draw();
   }
 
-  if(this.zombie.isLoaded) {
-    this.zombie.draw();
+  if(app.tutZombie.isLoaded) {
+    app.tutZombie.draw();
   }
 
   app.ctx.fillStyle = "rgb(255, 255, 255)";
@@ -122,36 +159,7 @@ Tutorial.prototype.draw = function() {
   app.ctx.textAlign = "center";
   app.ctx.textBaseline = "middle";
 
-  if(this.timer > 0 && this.timer < 180) {
-    app.ctx.fillText("Learn to survive", app.canvas.width / 2, app.canvas.height / 2);
-  }
-  else if(this.timer > 180 && this.timer < 360) {
-    app.ctx.fillText("Follow the instructions to learn the basics", app.canvas.width / 2, app.canvas.height / 2);
-  }
-  else if(this.timer > 360 && this.timer < 540){
-    app.ctx.fillText("Use the arrows to move", app.canvas.width / 2, app.canvas.height / 2);
-    allowMove = true;
-  }
-  else if(this.timer > 540){
-    app.ctx.fillText("Use spacebar to shoot the zombie", app.canvas.width / 2, app.canvas.height / 2);
-    this.zombie.init({imagePath:"assets/zombie/move/move_right.png",x:64,y:64});
-    allowTimer = false;
-  }
-  else if(!this.zombie.isLoaded && this.timer > 540) {
-    allowMove = false;
-    allowTimer= true;
-    app.ctx.fillText("Your health will decrease if a zombie touches you", app.canvas.width / 2, app.canvas.height / 2);
-  }
-  else if(this.timer > 600 && this.timer < 780){
-    app.ctx.fillText("Congratulations you are ready", app.canvas.width / 2, app.canvas.height / 2);
-    allowMove = true;
-  }
-
-  app.ctx.drawImage(this.upArrow, 64, app.canvas.height - 128);
-  app.ctx.drawImage(this.downArrow, 64, app.canvas.height - 64);
-  app.ctx.drawImage(this.leftArrow, 0, app.canvas.height - 64);
-  app.ctx.drawImage(this.rightArrow, 128, app.canvas.height - 64);
-  app.ctx.drawImage(this.shoot, app.canvas.width - 128, app.canvas.height - 64);
+  app.ctx.fillText("" + this.tutText, app.canvas.width / 2, app.canvas.height / 2);
 
   app.ctx.textAlign = "left";
   app.ctx.textBaseline = "top";

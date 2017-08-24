@@ -5,19 +5,19 @@ var prevTime = Date.now();
 var timer = 0;
 var direction;
 
-addEventListener("keydown", function(e) {
+document.addEventListener("keydown", function(e) {
   keysDown[e.keyCode] = true;
 }, false);
 
-addEventListener("keyup", function(e) {
+document.addEventListener("keyup", function(e) {
   delete keysDown[e.keyCode];
 }, false);
 
-addEventListener("touchstart", function (e) {
+document.addEventListener("touchstart", function (e) {
 
 }, false);
 
-addEventListener("touchend", function (e) {
+document.addEventListener("touchend", function (e) {
 
 }, false);
 
@@ -25,7 +25,7 @@ addEventListener("touchend", function (e) {
 function Player(options) {
   this.load(options.imagePath);
   this.x = app.canvas.width/2;
-  this.y = app.canvas.height/2;
+  this.y = app.canvas.height/2 + 100;
   this.isLoaded = false;
 }
 
@@ -91,30 +91,54 @@ Player.prototype.move = function() {
 
   if(32 in keysDown) {
 
-    for(i = 0; i < app.zombie.length; i++) {
+    if(!bTutorial){
+      for(i = 0; i < app.zombie.length; i++) {
 
-      if(((app.zombie[i].x > this.x) && (app.zombie[i].x < this.x + 125)) && (app.zombie[i].y == this.y)
-        && (this.direction === 3)) {
-        app.zombie[i].isLoaded = false;
-        app.zombie.splice(i,1);
-      }
+        if(((app.zombie[i].x > this.x) && (app.zombie[i].x < this.x + 125)) && (app.zombie[i].y > this.y - 32 && app.zombie[i].y < this.y + 32)
+          && (this.direction === 3)) {
+            app.zombie[i].isLoaded = false;
+            app.zombie.splice(i,1);
+          }
 
-      else if(((app.zombie[i].y > this.y) && (app.zombie[i].y < this.y + 125)) && (app.zombie[i].x == this.x)
-        && (this.direction === 2)) {
-        app.zombie[i].isLoaded = false;
-        app.zombie.splice(i,1);
-      }
+          else if(((app.zombie[i].y > this.y) && (app.zombie[i].y < this.y + 125)) && (app.zombie[i].x > this.x - 32 && app.zombie[i].x < this.x + 32)
+          && (this.direction === 2)) {
+            app.zombie[i].isLoaded = false;
+            app.zombie.splice(i,1);
+          }
 
-      else if(((app.zombie[i].x < this.x) && (app.zombie[i].x > this.x - 125)) && (app.zombie[i].y == this.y)
-        && (this.direction === 1)) {
-        app.zombie[i].isLoaded = false;
-        app.zombie.splice(i,1);
-      }
+          else if(((app.zombie[i].x < this.x) && (app.zombie[i].x > this.x - 125)) && (app.zombie[i].y > this.y - 32 && app.zombie[i].y < this.y + 32)
+          && (this.direction === 1)) {
+            app.zombie[i].isLoaded = false;
+            app.zombie.splice(i,1);
+          }
 
-      else if(((app.zombie[i].y < this.y) && (app.zombie[i].y > this.y - 125)) && (app.zombie[i].x == this.x)
-        && (this.direction === 0)) {
-        app.zombie.splice(i,1);
+          else if(((app.zombie[i].y < this.y) && (app.zombie[i].y > this.y - 125)) && (app.zombie[i].x > this.x - 32 && app.zombie[i].x < this.x + 32)
+          && (this.direction === 0)) {
+            app.zombie[i].isLoaded = false;
+            app.zombie.splice(i,1);
+          }
+        }
       }
-    }
+      else {
+        if(((app.tutZombie.x > this.x) && (app.tutZombie.x < this.x + 125)) && (app.tutZombie.y > this.y - 32 && app.tutZombie.y < this.y + 32)
+          && (this.direction === 3)) {
+            app.tutZombie.isLoaded = false;
+          }
+
+          else if(((app.tutZombie.y > this.y) && (app.tutZombie.y < this.y + 125)) && (app.tutZombie.x > this.x - 32 && app.tutZombie.x < this.x + 32)
+          && (this.direction === 2)) {
+            app.tutZombie.isLoaded = false;
+          }
+
+          else if(((app.tutZombie.x < this.x) && (app.tutZombie.x > this.x - 125)) && (app.tutZombie.y > this.y - 32 && app.tutZombie.y < this.y + 32)
+          && (this.direction === 1)) {
+            app.tutZombie.isLoaded = false;
+          }
+
+          else if(((app.tutZombie.y < this.y) && (app.tutZombie.y > this.y - 125)) && (app.tutZombie.x > this.x - 32 && app.tutZombie.x < this.x + 32)
+          && (this.direction === 0)) {
+            app.tutZombie.isLoaded = false;
+          }
+      }
   }
 }
