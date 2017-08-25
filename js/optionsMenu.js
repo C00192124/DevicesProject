@@ -3,7 +3,7 @@ var volUp;
 var volUpP;
 var volDown;
 var volDownP;
-var volumeNo = 100;
+var volumeNo = 50;
 var volSwitch = true;
 
 document.addEventListener("keydown", update);
@@ -53,6 +53,8 @@ if(bOptions){
     else if(!volSwitch && volumeNo < 100){
       volumeNo += 5;
     }
+    app.menuMusic.volume = volumeNo/100;
+    app.gameMusic.volume = volumeNo/100;
   }
 
   if(e.keyCode === 27) {
