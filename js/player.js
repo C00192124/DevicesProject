@@ -91,6 +91,8 @@ Player.prototype.move = function() {
 
   if(32 in keysDown) {
 
+    app.shootEffect.play();
+
     if(!bTutorial){
       for(i = 0; i < app.zombie.length; i++) {
 
@@ -98,24 +100,28 @@ Player.prototype.move = function() {
           && (this.direction === 3)) {
             app.zombie[i].isLoaded = false;
             app.zombie.splice(i,1);
+            app.killEffect.play();
           }
 
           else if(((app.zombie[i].y > this.y) && (app.zombie[i].y < this.y + 125)) && (app.zombie[i].x > this.x - 32 && app.zombie[i].x < this.x + 32)
           && (this.direction === 2)) {
             app.zombie[i].isLoaded = false;
             app.zombie.splice(i,1);
+            app.killEffect.play();
           }
 
           else if(((app.zombie[i].x < this.x) && (app.zombie[i].x > this.x - 125)) && (app.zombie[i].y > this.y - 32 && app.zombie[i].y < this.y + 32)
           && (this.direction === 1)) {
             app.zombie[i].isLoaded = false;
             app.zombie.splice(i,1);
+            app.killEffect.play();
           }
 
           else if(((app.zombie[i].y < this.y) && (app.zombie[i].y > this.y - 125)) && (app.zombie[i].x > this.x - 32 && app.zombie[i].x < this.x + 32)
           && (this.direction === 0)) {
             app.zombie[i].isLoaded = false;
             app.zombie.splice(i,1);
+            app.killEffect.play();
           }
         }
       }
@@ -123,21 +129,25 @@ Player.prototype.move = function() {
         if(((app.tutZombie.x > this.x) && (app.tutZombie.x < this.x + 125)) && (app.tutZombie.y > this.y - 32 && app.tutZombie.y < this.y + 32)
           && (this.direction === 3)) {
             app.tutZombie.isLoaded = false;
+            app.killEffect.play();
           }
 
           else if(((app.tutZombie.y > this.y) && (app.tutZombie.y < this.y + 125)) && (app.tutZombie.x > this.x - 32 && app.tutZombie.x < this.x + 32)
           && (this.direction === 2)) {
             app.tutZombie.isLoaded = false;
+            app.killEffect.play();
           }
 
           else if(((app.tutZombie.x < this.x) && (app.tutZombie.x > this.x - 125)) && (app.tutZombie.y > this.y - 32 && app.tutZombie.y < this.y + 32)
           && (this.direction === 1)) {
             app.tutZombie.isLoaded = false;
+            app.killEffect.play();
           }
 
           else if(((app.tutZombie.y < this.y) && (app.tutZombie.y > this.y - 125)) && (app.tutZombie.x > this.x - 32 && app.tutZombie.x < this.x + 32)
           && (this.direction === 0)) {
             app.tutZombie.isLoaded = false;
+            app.killEffect.play();
           }
       }
   }

@@ -18,6 +18,8 @@ function init() {
   app.ctx = app.canvas.getContext("2d");
   app.menuMusic = new Audio("assets/sound/menu.mp3");
   app.gameMusic = new Audio("assets/sound/gameplay.mp3");
+  app.killEffect = new Audio("assets/sound/zombie.wav");
+  app.shootEffect = new Audio("assets/sound/shotgun.wav");
   app.game = new Gameplay();
   app.menu = new MainMenu();
   app.optMenu = new OptionsMenu();
