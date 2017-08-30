@@ -5,19 +5,19 @@ var prevTime = Date.now();
 var timer = 0;
 var direction;
 
-document.addEventListener("keydown", function(e) {
-  keysDown[e.keyCode] = true;
+addEventListener("keydown", function(e) {
+  this.keysDown[e.keyCode] = true;
 }, false);
 
-document.addEventListener("keyup", function(e) {
-  delete keysDown[e.keyCode];
+addEventListener("keyup", function(e) {
+  delete this.keysDown[e.keyCode];
 }, false);
 
-document.addEventListener("touchstart", function (e) {
+addEventListener("touchstart", function (e) {
 
 }, false);
 
-document.addEventListener("touchend", function (e) {
+addEventListener("touchend", function (e) {
 
 }, false);
 

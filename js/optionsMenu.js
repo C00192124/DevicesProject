@@ -6,7 +6,7 @@ var volDownP;
 var volumeNo = 50;
 var volSwitch = true;
 
-document.addEventListener("keydown", update);
+addEventListener("keydown", update);
 
 function OptionsMenu() {
 

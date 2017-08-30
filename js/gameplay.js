@@ -30,6 +30,7 @@ var upArrow;
 var shoot;
 var livesNo;
 var levelTwo = false;
+var corner;
 
 function Gameplay() {
 
@@ -38,6 +39,7 @@ function Gameplay() {
   //Creating the player
   app.player = new Player({imagePath:"assets/survivor/move/move_right.png"});
   this.spawn = true;
+  this.corner = false;
   this.livesNo = 100;
 
   //Load images for background
@@ -55,20 +57,23 @@ function Gameplay() {
 
 Gameplay.prototype.update = function() {
 
-if(!levelTwo){
-  for(i = 0; i < app.zombie.length; i++) {
-    app.zombie[i].zombieChase();
-  }
-  app.player.move();
+  if(playGame){
+    if(!levelTwo){
+      for(i = 0; i < app.zombie.length; i++) {
+        app.zombie[i].zombieChase();
+      }
+      app.player.move();
 
-  if(this.timer < 480) {
-    this.timer++;
+      if(this.timer < 320) {
+        this.timer++;
+      }
+      else {
+        this.pushZombie();
+        this.pushZombie();
+        this.timer = 0;
+      }
+    }
   }
-  else {
-    this.pushZombie();
-    this.timer = 0;
-  }
- }
 }
 
 Gameplay.prototype.collision = function() {
@@ -135,12 +140,28 @@ Gameplay.prototype.pushZombie = function() {
 
   app.zomInit = new Zombie();
   if(this.spawn) {
-    app.zomInit.init({imagePath:"assets/zombie/move/move_right.png",x:64,y:64});
-    this.spawn = false;
+    if(!this.corner) {
+      app.zomInit.init({imagePath:"assets/zombie/move/move_right.png",x:app.canvas.width - 128,y:64});
+      this.spawn = false;
+      this.corner = false;
+    }
+    else {
+      app.zomInit.init({imagePath:"assets/zombie/move/move_right.png",x:64,y:64});
+      this.spawn = false;
+      this.corner = true;
+    }
   }
   else {
-    app.zomInit.init({imagePath:"assets/zombie/move/move_left.png", x:app.canvas.width - 128, y:app.canvas.height - 128});
-    this.spawn = true;
+    if(this.corner) {
+      app.zomInit.init({imagePath:"assets/zombie/move/move_left.png", x:app.canvas.width - 128, y:app.canvas.height - 128});
+      this.spawn = true;
+      this.corner = false;
+    }
+    else {
+      app.zomInit.init({imagePath:"assets/zombie/move/move_left.png", x:64, y:app.canvas.height - 128});
+      this.spawn = true;
+      this.corner = true;
+    }
   }
   app.zombie.push(app.zomInit);
 

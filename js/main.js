@@ -46,13 +46,13 @@ function main() {
   if(bMenu) {
 
     app.gameMusic.pause();
-    app.menuMusic.play();
+    //app.menuMusic.play();
     app.menu.draw();
 
   }
   else if(playGame) {
 
-    app.gameMusic.play();
+    //app.gameMusic.play();
     app.menuMusic.pause();
     app.game.collision();
     app.game.update();
@@ -62,20 +62,20 @@ function main() {
   else if(bOptions) {
 
     app.gameMusic.pause();
-    app.menuMusic.play();
+    //app.menuMusic.play();
     app.optMenu.draw();
 
   }
   else if(bTutorialMenu) {
 
     app.gameMusic.pause();
-    app.menuMusic.play();
+    //app.menuMusic.play();
     app.tutorialMenu.draw();
 
   }
   else if(bTutorial) {
 
-    app.gameMusic.play();
+    //app.gameMusic.play();
     app.menuMusic.pause();
     app.tutorial.collision();
     app.tutorial.update();

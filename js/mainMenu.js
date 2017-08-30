@@ -9,8 +9,8 @@ var exitP;
 var exitSwitch = false;
 var back;
 
-document.addEventListener("keydown", update);
-document.addEventListener("touchend", update);
+addEventListener("keydown", update);
+addEventListener("touchend", update);
 
 function MainMenu() {
 
@@ -33,12 +33,12 @@ function MainMenu() {
 
 function update(e) {
 
-  console.log("touch");
-  if(e.clientX > this.play.x && e.clientX < this.play.x + 100
-  && e.clientY > this.play.y && e.clientY < this.play.y + 100) {
+  /*console.log("touch");
+  if(e.touches.clientX > this.play.x && e.touches.clientX < this.play.x + 100
+  && e.touches.clientY > this.play.y && e.touches.clientY < this.play.y + 100) {
     bMenu = false;
     bTutorialMenu = true;
-  }
+  }*/
 
 if(bMenu){
   if(e.keyCode === 38) {
@@ -77,6 +77,7 @@ if(bMenu){
   }
   else if(e.keyCode === 13) {
     if(playSwitch) {
+      app.game = new Gameplay();
       bMenu = false;
       bTutorialMenu = true;
     }
