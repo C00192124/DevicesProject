@@ -5,7 +5,8 @@ var playButtonP;
 var tutSwitch;
 var back;
 
-document.addEventListener("keydown", update);
+addEventListener("keydown", updateTut);
+addEventListener("touchstart", clickTut);
 
 function TutMenu() {
 
@@ -23,7 +24,35 @@ function TutMenu() {
 
 }
 
-function update(e) {
+function clickTut(e) {
+
+  if(bTutorialMenu) {
+
+    touches = e.touches;
+    tX = touches[0].clientX;
+    tY = touches[0].clientY;
+
+    if((tX > (app.canvas.width / 3 * 1) + 100) && (tX < (app.canvas.width / 3 * 1) + 180)
+    && (tY < (app.canvas.height / 2) + 50) && (tY > (app.canvas.height / 2) - 50)) {
+      if(confirm("Proceed to tutorial?")) {
+        app.tutorial = new Tutorial();
+        bTutorialMenu = false;
+        bTutorial = true;
+      }
+    }
+
+    if((tX > (app.canvas.width / 3 * 2) + 100) && (tX < (app.canvas.width / 3 * 2) + 180)
+    && (tY < (app.canvas.height / 2) + 50) && (tY > (app.canvas.height / 2) - 50)) {
+      app.game = new Gameplay();
+      bTutorialMenu = false;
+      playGame = true;
+    }
+
+  }
+
+}
+
+function updateTut(e) {
 
 if(bTutorialMenu) {
   if(e.keyCode === 37) {
@@ -46,11 +75,13 @@ if(bTutorialMenu) {
 
   if(e.keyCode === 13) {
       if(tutSwitch && bTutorialMenu) {
+        app.game = new Gameplay();
         bTutorialMenu = false;
         playGame = true;
       }
       else if (!tutSwitch && bTutorialMenu){
         if(confirm("Proceed to tutorial?")) {
+          app.tutorial = new Tutorial();
           bTutorialMenu = false;
           bTutorial = true;
         }

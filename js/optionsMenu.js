@@ -6,7 +6,8 @@ var volDownP;
 var volumeNo = 50;
 var volSwitch = true;
 
-addEventListener("keydown", update);
+addEventListener("keydown", updateOpt);
+addEventListener("touchstart", clickOpt);
 
 function OptionsMenu() {
 
@@ -25,7 +26,30 @@ function OptionsMenu() {
 
 }
 
-function update(e) {
+function clickOpt(e) {
+
+  if(bOptions){
+    touches = e.touches;
+    tX = touches[0].clientX;
+    tY = touches[0].clientY;
+
+    if((tX > (app.canvas.width / 3 * 1) + 100) && (tX < (app.canvas.width / 3 * 1) + 180)
+    && (tY < (app.canvas.height / 3 * 2) + 50) && (tY > (app.canvas.height / 3 * 2) - 50)) {
+      volumeNo -= 5;
+      app.menuMusic.volume = volumeNo/100;
+      app.gameMusic.volume = volumeNo/100;
+    }
+
+    if((tX > (app.canvas.width / 3 * 2) + 100) && (tX < (app.canvas.width / 3 * 2) + 180)
+    && (tY < (app.canvas.height / 3 * 2) + 50) && (tY > (app.canvas.height / 3 * 2) - 50)) {
+      volumeNo += 5;
+      app.menuMusic.volume = volumeNo/100;
+      app.gameMusic.volume = volumeNo/100;
+    }
+  }
+}
+
+function updateOpt(e) {
 
 if(bOptions){
   if(e.keyCode === 37) {
@@ -60,6 +84,7 @@ if(bOptions){
   if(e.keyCode === 27) {
     bOptions = false;
     bMenu = true;
+    app.menu = new MainMenu();
   }
  }
 }

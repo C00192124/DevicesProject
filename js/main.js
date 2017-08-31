@@ -12,6 +12,8 @@ var bTutorialMenu;
 var bTutorial;
 var menuMusic;
 var gameMusic;
+var particles = [];
+var particlesNo = 100;
 
 function init() {
   app.canvas = document.getElementById('myCanvas');
@@ -34,7 +36,6 @@ function init() {
   app.menuMusic.volume = .5;
   app.menuMusic.loop = true;
   app.gameMusic.loop = true;
-
 }
 
 //Game loop

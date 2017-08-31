@@ -9,8 +9,8 @@ var exitP;
 var exitSwitch = false;
 var back;
 
-addEventListener("keydown", update);
-addEventListener("touchend", update);
+addEventListener("keydown", updateMenu);
+addEventListener("touchstart", clickMenu);
 
 function MainMenu() {
 
@@ -31,14 +31,7 @@ function MainMenu() {
 
 }
 
-function update(e) {
-
-  /*console.log("touch");
-  if(e.touches.clientX > this.play.x && e.touches.clientX < this.play.x + 100
-  && e.touches.clientY > this.play.y && e.touches.clientY < this.play.y + 100) {
-    bMenu = false;
-    bTutorialMenu = true;
-  }*/
+function updateMenu(e) {
 
 if(bMenu){
   if(e.keyCode === 38) {
@@ -77,7 +70,7 @@ if(bMenu){
   }
   else if(e.keyCode === 13) {
     if(playSwitch) {
-      app.game = new Gameplay();
+      app.tutorialMenu = new TutMenu();
       bMenu = false;
       bTutorialMenu = true;
     }
@@ -87,11 +80,42 @@ if(bMenu){
       }
     }
     else if(optionsSwitch) {
+      app.optMenu = new OptionsMenu();
       bOptions = true;
       bMenu = false;
     }
   }
  }
+}
+
+function clickMenu(e) {
+
+  if(bMenu) {
+    touches = e.touches;
+    tX = touches[0].clientX;
+    tY = touches[0].clientY;
+
+    if((tX > (app.canvas.width / 3 * 2)- 50) && (tX < (app.canvas.width / 3 * 2) + 50)
+    && (tY < (app.canvas.height / 4) + 50) && (tY > (app.canvas.height / 4) - 50)) {
+      app.tutorialMenu = new TutMenu();
+      bMenu = false;
+      bTutorialMenu = true;
+    }
+
+    if((tX > (app.canvas.width / 3 * 2)- 50) && (tX < (app.canvas.width / 3 * 2) + 50)
+    && (tY < (app.canvas.height / 4 * 2) + 50) && (tY > (app.canvas.height / 4 * 2) - 50)) {
+      app.optMenu = new OptionsMenu();
+      bOptions = true;
+      bMenu = false;
+    }
+
+    if((tX > (app.canvas.width / 3 * 2)- 50) && (tX < (app.canvas.width / 3 * 2) + 50)
+    && (tY < (app.canvas.height / 4 * 3) + 50) && (tY > (app.canvas.height / 4 * 3) - 50)) {
+      if(confirm("Exit Game")) {
+        close();
+      }
+    }
+  }
 }
 
 MainMenu.prototype.draw = function() {

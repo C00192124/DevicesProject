@@ -13,14 +13,6 @@ addEventListener("keyup", function(e) {
   delete this.keysDown[e.keyCode];
 }, false);
 
-addEventListener("touchstart", function (e) {
-
-}, false);
-
-addEventListener("touchend", function (e) {
-
-}, false);
-
 //Loading in a Player
 function Player(options) {
   this.load(options.imagePath);
@@ -48,6 +40,8 @@ Player.prototype.draw = function() {
     prevTime = Date.now();
   }
   app.ctx.drawImage(this.image, frame*64, 0, 64, 64, this.x, this.y, 64, 64);
+
+
 
 }
 
@@ -98,29 +92,25 @@ Player.prototype.move = function() {
 
         if(((app.zombie[i].x > this.x) && (app.zombie[i].x < this.x + 125)) && (app.zombie[i].y > this.y - 32 && app.zombie[i].y < this.y + 32)
           && (this.direction === 3)) {
-            app.zombie[i].isLoaded = false;
-            app.zombie.splice(i,1);
+            app.zombie[i].death();
             app.killEffect.play();
           }
 
           else if(((app.zombie[i].y > this.y) && (app.zombie[i].y < this.y + 125)) && (app.zombie[i].x > this.x - 32 && app.zombie[i].x < this.x + 32)
           && (this.direction === 2)) {
-            app.zombie[i].isLoaded = false;
-            app.zombie.splice(i,1);
+            app.zombie[i].death();
             app.killEffect.play();
           }
 
           else if(((app.zombie[i].x < this.x) && (app.zombie[i].x > this.x - 125)) && (app.zombie[i].y > this.y - 32 && app.zombie[i].y < this.y + 32)
           && (this.direction === 1)) {
-            app.zombie[i].isLoaded = false;
-            app.zombie.splice(i,1);
+            app.zombie[i].death();
             app.killEffect.play();
           }
 
           else if(((app.zombie[i].y < this.y) && (app.zombie[i].y > this.y - 125)) && (app.zombie[i].x > this.x - 32 && app.zombie[i].x < this.x + 32)
           && (this.direction === 0)) {
-            app.zombie[i].isLoaded = false;
-            app.zombie.splice(i,1);
+            app.zombie[i].death();
             app.killEffect.play();
           }
         }
@@ -128,24 +118,28 @@ Player.prototype.move = function() {
       else {
         if(((app.tutZombie.x > this.x) && (app.tutZombie.x < this.x + 125)) && (app.tutZombie.y > this.y - 32 && app.tutZombie.y < this.y + 32)
           && (this.direction === 3)) {
+            app.zombie[i].death();
             app.tutZombie.isLoaded = false;
             app.killEffect.play();
           }
 
           else if(((app.tutZombie.y > this.y) && (app.tutZombie.y < this.y + 125)) && (app.tutZombie.x > this.x - 32 && app.tutZombie.x < this.x + 32)
           && (this.direction === 2)) {
+            app.zombie[i].death();
             app.tutZombie.isLoaded = false;
             app.killEffect.play();
           }
 
           else if(((app.tutZombie.x < this.x) && (app.tutZombie.x > this.x - 125)) && (app.tutZombie.y > this.y - 32 && app.tutZombie.y < this.y + 32)
           && (this.direction === 1)) {
+            app.zombie[i].death();
             app.tutZombie.isLoaded = false;
             app.killEffect.play();
           }
 
           else if(((app.tutZombie.y < this.y) && (app.tutZombie.y > this.y - 125)) && (app.tutZombie.x > this.x - 32 && app.tutZombie.x < this.x + 32)
           && (this.direction === 0)) {
+            app.zombie[i].death();
             app.tutZombie.isLoaded = false;
             app.killEffect.play();
           }

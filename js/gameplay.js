@@ -3,21 +3,7 @@ var zombie;
 var zomInit;
 var timer;
 var spawn;
-var level = {
-  "levelData": [
-    ["stoneFloor","stoneFloor","stoneFloor","stoneFloor","stoneFloor","stumpFloor","stumpFloor","stoneFloor","stumpFloor","stoneFloor","stoneFloor"],
-    ["stoneFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","flowerFloor","emptyFloor","emptyFloor","emptyFloor","stoneFloor"],
-    ["stoneFloor","emptyFloor","emptyFloor","bFlowerFloor","emptyFloor","flowerFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","stoneFloor"],
-    ["stumpFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","stoneFloor"],
-    ["stoneFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","flowerFloor","emptyFloor","emptyFloor","stoneFloor"],
-    ["stoneFloor","flowerFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","stumpFloor"],
-    ["stoneFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","bFlowerFloor","emptyFloor","stoneFloor"],
-    ["stoneFloor","emptyFloor","emptyFloor","flowerFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","stoneFloor"],
-    ["stoneFloor","emptyFloor","bFlowerFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","stoneFloor"],
-    ["stumpFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","flowerFloor","emptyFloor","stoneFloor"],
-    ["stoneFloor","stoneFloor","stoneFloor","stoneFloor","stumpFloor","stoneFloor","stoneFloor","stoneFloor","stoneFloor","stoneFloor","stumpFloor"]
-  ]
-}
+var level;
 var stoneFloorImg;
 var flowerFloorImg;
 var bFlowerFloorImg;
@@ -31,6 +17,26 @@ var shoot;
 var livesNo;
 var levelTwo = false;
 var corner;
+var gameOver = false;
+var kills;
+var limit;
+
+addEventListener("keydown", keyDown);
+
+function keyDown(e) {
+  if(playGame){
+    if(e.keyCode === 27 && gameOver) {
+        bMenu = true;
+        playGame = false;
+        gameOver = false;
+        app.menu = new MainMenu();
+    }
+    if(e.keyCode === 13 && gameOver) {
+        gameOver = false;
+        app.game = new Gameplay();
+    }
+  }
+}
 
 function Gameplay() {
 
@@ -41,6 +47,37 @@ function Gameplay() {
   this.spawn = true;
   this.corner = false;
   this.livesNo = 100;
+  app.kills = 0;
+  this.limit = 320;
+
+  level = {
+    "levelOne": [
+      ["stoneFloor","stoneFloor","stoneFloor","stoneFloor","stoneFloor","stumpFloor","stumpFloor","stoneFloor","stumpFloor","stoneFloor","stoneFloor"],
+      ["stoneFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","stoneFloor"],
+      ["stoneFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","stoneFloor"],
+      ["stumpFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","stoneFloor"],
+      ["stoneFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","stoneFloor"],
+      ["stoneFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","stumpFloor"],
+      ["stoneFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","stoneFloor"],
+      ["stoneFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","stoneFloor"],
+      ["stoneFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","stoneFloor"],
+      ["stumpFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","stoneFloor"],
+      ["stoneFloor","stoneFloor","stoneFloor","stoneFloor","stumpFloor","stoneFloor","stoneFloor","stoneFloor","stoneFloor","stoneFloor","stumpFloor"]
+    ],
+    "levelTwo": [
+      ["stoneFloor","stoneFloor","stumpFloor","stoneFloor","stoneFloor","stoneFloor","stumpFloor","stoneFloor","stoneFloor","stoneFloor","stoneFloor"],
+      ["stoneFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","flowerFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","stoneFloor"],
+      ["stoneFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","stoneFloor"],
+      ["stumpFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","flowerFloor","emptyFloor","emptyFloor","stumpFloor"],
+      ["stoneFloor","emptyFloor","bFlowerFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","stoneFloor"],
+      ["stoneFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","stoneFloor"],
+      ["stoneFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","flowerFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","stoneFloor"],
+      ["stoneFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","stoneFloor"],
+      ["stoneFloor","emptyFloor","emptyFloor","flowerFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","stoneFloor"],
+      ["stumpFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","emptyFloor","bFlowerFloor","emptyFloor","emptyFloor","stoneFloor"],
+      ["stumpFloor","stoneFloor","stoneFloor","stoneFloor","stumpFloor","stoneFloor","stoneFloor","stoneFloor","stoneFloor","stoneFloor","stumpFloor"]
+    ]
+  };
 
   //Load images for background
   app.stoneFloorImg = new Image();
@@ -58,21 +95,73 @@ function Gameplay() {
 Gameplay.prototype.update = function() {
 
   if(playGame){
-    if(!levelTwo){
-      for(i = 0; i < app.zombie.length; i++) {
-        app.zombie[i].zombieChase();
-      }
-      app.player.move();
+    if(!gameOver) {
+      if(!levelTwo){
+        for(i = 0; i < app.zombie.length; i++) {
+          if(app.zombie[i].dead){
+            app.zombie[i].deathTimer++;
+            if(app.zombie[i].deathTimer > 30){
+              app.zombie[i].isLoaded = false;
+              app.zombie.splice(i,1);
+              app.kills += 1;
+            }
+          }
+          else {app.zombie[i].zombieChase();}
+        }
+        app.player.move();
 
-      if(this.timer < 320) {
-        this.timer++;
+        if(this.timer < this.limit) {
+          this.timer++;
+        }
+        else {
+          this.pushZombie();
+          this.pushZombie();
+          this.timer = 0;
+          if(this.limit > 80) {
+            this.limit -= 20;
+          }
+        }
+
+        if(app.kills === 20) {
+          levelTwo = true;
+          this.kills = 0;
+          app.game = new Gameplay();
+        }
       }
+
+      ///////////LevelTwo//////////////
       else {
-        this.pushZombie();
-        this.pushZombie();
-        this.timer = 0;
+        for(i = 0; i < app.zombie.length; i++) {
+          if(app.zombie[i].dead){
+            app.zombie[i].deathTimer++;
+            if(app.zombie[i].deathTimer > 30){
+              app.zombie[i].isLoaded = false;
+              app.zombie.splice(i,1);
+              app.kills += 1;
+            }
+          }
+          else {app.zombie[i].zombieChase();}
+        }
+        app.player.move();
+
+        if(this.timer < this.limit) {
+          this.timer++;
+        }
+        else {
+          this.pushZombie();
+          this.pushZombie();
+          this.timer = 0;
+          if(this.limit > 80) {
+            this.limit -= 20;
+          }
+        }
       }
     }
+  }
+
+  if(this.livesNo <= 0)
+  {
+    gameOver = true;
   }
 }
 
@@ -83,11 +172,25 @@ if(!levelTwo){
 
     if((app.zombie[i].x < app.player.x + 50) && (app.zombie[i].x + 50 > app.player.x)
       && (app.zombie[i].y < app.player.y + 50) && (app.zombie[i].y + 50 > app.player.y)) {
+        if(this.livesNo > 0) {
+          this.livesNo -= 0.1;
+        }
+      }
+    }
+  }
 
-        this.livesNo -= 0.1;
+  /////////////LevelTwo////////////
+  else{
+    for(i = 0; i < app.zombie.length; i++) {
+
+      if((app.zombie[i].x < app.player.x + 50) && (app.zombie[i].x + 50 > app.player.x)
+        && (app.zombie[i].y < app.player.y + 50) && (app.zombie[i].y + 50 > app.player.y)) {
+          if(this.livesNo > 0) {
+            this.livesNo -= 0.2;
+          }
+        }
       }
   }
- }
 }
 
 Gameplay.prototype.draw = function() {
@@ -95,19 +198,13 @@ Gameplay.prototype.draw = function() {
 if(!levelTwo){
   for(i=0;i<11;i++) {
     for(j=0;j<11;j++) {
-      if(level.levelData[i][j] === "stoneFloor") {
+      if(level.levelOne[i][j] === "stoneFloor") {
         app.ctx.drawImage(app.stoneFloorImg, j * 64, i * 64, 64, 64);
       }
-      if(level.levelData[i][j] === "flowerFloor") {
-        app.ctx.drawImage(app.flowerFloorImg, j * 64, i * 64, 64, 64);
-      }
-      if(level.levelData[i][j] === "bFlowerFloor") {
-        app.ctx.drawImage(app.bFlowerFloorImg, j * 64, i * 64, 64, 64);
-      }
-      if(level.levelData[i][j] === "emptyFloor") {
+      if(level.levelOne[i][j] === "emptyFloor") {
         app.ctx.drawImage(app.emptyFloorImg, j * 64, i * 64, 64, 64);
       }
-      if(level.levelData[i][j] === "stumpFloor") {
+      if(level.levelOne[i][j] === "stumpFloor") {
         app.ctx.drawImage(app.stumpFloorImg, j * 64, i * 64, 64, 64);
       }
     }
@@ -119,6 +216,7 @@ if(!levelTwo){
   for(i = 0; i < app.zombie.length; i++) {
     if(app.zombie[i].isLoaded) {
       app.zombie[i].draw();
+      app.zombie[i].splat();
     }
   }
 
@@ -127,11 +225,61 @@ if(!levelTwo){
   app.ctx.textAlign = "left";
   app.ctx.textBaseline = "top";
   app.ctx.fillText("" + Math.round(this.livesNo), 0,0);
+  app.ctx.fillText("Kills:" + app.kills, app.canvas.width - 200 ,0);
+
+  if(gameOver) {
+    app.ctx.font = "36px Roboto";
+    app.ctx.textAlign = "center";
+    app.ctx.textBaseline = "middle";
+    app.ctx.fillText("Game Over, Esc to Exit, Return to Retry", app.canvas.width/2,app.canvas.height/2);
+  }
 
  }
  else {
 
+   for(i=0;i<11;i++) {
+     for(j=0;j<11;j++) {
+       if(level.levelTwo[i][j] === "stoneFloor") {
+         app.ctx.drawImage(app.stoneFloorImg, j * 64, i * 64, 64, 64);
+       }
+       if(level.levelTwo[i][j] === "flowerFloor") {
+         app.ctx.drawImage(app.flowerFloorImg, j * 64, i * 64, 64, 64);
+       }
+       if(level.levelTwo[i][j] === "bFlowerFloor") {
+         app.ctx.drawImage(app.bFlowerFloorImg, j * 64, i * 64, 64, 64);
+       }
+       if(level.levelTwo[i][j] === "emptyFloor") {
+         app.ctx.drawImage(app.emptyFloorImg, j * 64, i * 64, 64, 64);
+       }
+       if(level.levelTwo[i][j] === "stumpFloor") {
+         app.ctx.drawImage(app.stumpFloorImg, j * 64, i * 64, 64, 64);
+       }
+     }
+   }
+   if(app.player.isLoaded) {
+     app.player.draw();
+   }
 
+   for(i = 0; i < app.zombie.length; i++) {
+     if(app.zombie[i].isLoaded) {
+       app.zombie[i].draw();
+       app.zombie[i].splat();
+     }
+   }
+
+   app.ctx.fillStyle = "rgb(255, 255, 255)";
+   app.ctx.font = "56px Roboto";
+   app.ctx.textAlign = "left";
+   app.ctx.textBaseline = "top";
+   app.ctx.fillText("" + Math.round(this.livesNo), 0,0);
+   app.ctx.fillText("Kills:" + app.kills, app.canvas.width - 200 ,0);
+
+   if(gameOver) {
+     app.ctx.font = "36px Roboto";
+     app.ctx.textAlign = "center";
+     app.ctx.textBaseline = "middle";
+     app.ctx.fillText("Game Over, Esc to Exit, Return to Retry", app.canvas.width/2,app.canvas.height/2);
+   }
  }
 
 }

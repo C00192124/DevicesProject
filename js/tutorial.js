@@ -31,13 +31,16 @@ var advance = false;
 var advanced = false;
 
 addEventListener("keydown", function(e) {
-  if(allowMove && e.keyCode === 39 && bTutorial){ rightPress = true }
-  if(allowMove && e.keyCode === 37 && bTutorial){ leftPress = true }
-  if(allowMove && e.keyCode === 40 && bTutorial){ downPress = true }
-  if(allowMove && e.keyCode === 38 && bTutorial){ upPress = true }
-  if(e.keyCode === 27) {
-    bTutorial = false;
-    bMenu = true;
+
+  if(bTutorial){
+    if(allowMove && e.keyCode === 39 && bTutorial){ rightPress = true }
+    if(allowMove && e.keyCode === 37 && bTutorial){ leftPress = true }
+    if(allowMove && e.keyCode === 40 && bTutorial){ downPress = true }
+    if(allowMove && e.keyCode === 38 && bTutorial){ upPress = true }
+    if(e.keyCode === 27) {
+      bTutorial = false;
+      bMenu = true;
+    }
   }
 }, false);
 
