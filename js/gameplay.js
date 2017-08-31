@@ -20,6 +20,9 @@ var corner;
 var gameOver = false;
 var kills;
 var limit;
+var boltImg;
+var boltAlive = true;
+var boltTimer;
 
 addEventListener("keydown", keyDown);
 
@@ -49,6 +52,7 @@ function Gameplay() {
   this.livesNo = 100;
   app.kills = 0;
   this.limit = 320;
+  this.boltTimer = 0;
 
   level = {
     "levelOne": [
@@ -85,11 +89,13 @@ function Gameplay() {
   app.flowerFloorImg = new Image();
   app.bFlowerFloorImg = new Image();
   app.emptyFloorImg = new Image();
+  app.boltImg = new Image();
   app.stoneFloorImg.src = "assets/forest/stoneFloor.png";
   app.emptyFloorImg.src = "assets/forest/emptyFloor.png";
   app.flowerFloorImg.src = "assets/forest/flowerFloor.png";
   app.bFlowerFloorImg.src = "assets/forest/bFlowerFloor.png";
   app.stumpFloorImg.src = "assets/forest/stumpFloor.png";
+  app.boltImg.src = "assets/pickup/bolt.png";
 }
 
 Gameplay.prototype.update = function() {
@@ -125,6 +131,7 @@ Gameplay.prototype.update = function() {
         if(app.kills === 20) {
           levelTwo = true;
           this.kills = 0;
+          this.boltTimer = 0;
           app.game = new Gameplay();
         }
       }
@@ -189,6 +196,11 @@ if(!levelTwo){
             this.livesNo -= 0.2;
           }
         }
+      }
+      if(app.player.x < 200 + 46 && app.player.x > 200
+      && app.player.y < 200 + 46 && app.player.y > 200 && boltAlive){
+        boltAlive = false;
+        this.boltTimer = 0;
       }
   }
 }
@@ -264,6 +276,16 @@ if(!levelTwo){
      if(app.zombie[i].isLoaded) {
        app.zombie[i].draw();
        app.zombie[i].splat();
+     }
+   }
+
+   if(boltAlive){
+     app.ctx.drawImage(app.boltImg, 200, 200);
+   }
+   else {
+     this.boltTimer++;
+     if(this.boltTimer > 300){
+       boltAlive = true;
      }
    }
 

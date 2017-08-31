@@ -50,7 +50,10 @@ Player.prototype.move = function() {
   if(38 in keysDown) {
 
     if ((this.y) > 50) {
-  		this.y -= 2;
+      if(!boltAlive){
+        this.y -= 4;
+      }
+      else{this.y -= 2;}
       this.image.src = "assets/survivor/move/move_up.png";
       this.direction = 0;
     }
@@ -59,7 +62,10 @@ Player.prototype.move = function() {
   if(37 in keysDown) {
 
     if ((this.x) > 50) {
-  		this.x -= 2;
+      if(!boltAlive){
+        this.x -= 4;
+      }
+      else{this.x -= 2;}
       this.image.src = "assets/survivor/move/move_left.png";
       this.direction = 1;
     }
@@ -68,7 +74,10 @@ Player.prototype.move = function() {
   if(39 in keysDown) {
 
     if ((this.x + 64) < app.canvas.width - 50) {
-      this.x += 2;
+      if(!boltAlive){
+        this.x += 4;
+      }
+      else{this.x += 2;}
       this.image.src = "assets/survivor/move/move_right.png";
       this.direction = 3;
     }
@@ -77,7 +86,10 @@ Player.prototype.move = function() {
   if(40 in keysDown) {
 
   	if ((this.y + 64) < app.canvas.height - 50) {
-      this.y += 2;
+      if(!boltAlive){
+        this.y += 4;
+      }
+      else{this.y += 2;}
       this.image.src = "assets/survivor/move/move_down.png";
       this.direction = 2;
     }

@@ -44,6 +44,7 @@ function clickTut(e) {
     if((tX > (app.canvas.width / 3 * 2) + 100) && (tX < (app.canvas.width / 3 * 2) + 180)
     && (tY < (app.canvas.height / 2) + 50) && (tY > (app.canvas.height / 2) - 50)) {
       app.game = new Gameplay();
+      levelTwo = false;
       bTutorialMenu = false;
       playGame = true;
     }
