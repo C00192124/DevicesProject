@@ -4,6 +4,7 @@ var timerB = false;
 var prevTime = Date.now();
 var timer = 0;
 var direction;
+var shootTimer;
 
 addEventListener("keydown", function(e) {
   this.keysDown[e.keyCode] = true;
@@ -28,6 +29,7 @@ Player.prototype.load = function(imagePath) {
   this.image.onload = function() {
     that.isLoaded = true;
   }
+  this.shootTimer = 0;
 };
 
 Player.prototype.draw = function() {
@@ -41,11 +43,12 @@ Player.prototype.draw = function() {
   }
   app.ctx.drawImage(this.image, frame*64, 0, 64, 64, this.x, this.y, 64, 64);
 
-
-
 }
 
 Player.prototype.move = function() {
+
+  this.shootTimer++;
+  console.log(this.shootTimer);
 
   if(38 in keysDown) {
 
@@ -97,12 +100,13 @@ Player.prototype.move = function() {
 
   if(32 in keysDown) {
 
-    app.shootEffect.play();
+    if(this.shootTimer > 90) {
 
-    if(!bTutorial){
-      for(i = 0; i < app.zombie.length; i++) {
+      if(!bTutorial){
 
-        if(((app.zombie[i].x > this.x) && (app.zombie[i].x < this.x + 125)) && (app.zombie[i].y > this.y - 32 && app.zombie[i].y < this.y + 32)
+        for(i = 0; i < app.zombie.length; i++) {
+
+          if(((app.zombie[i].x > this.x) && (app.zombie[i].x < this.x + 125)) && (app.zombie[i].y > this.y - 32 && app.zombie[i].y < this.y + 32)
           && (this.direction === 3)) {
             app.zombie[i].death();
             app.killEffect.play();
@@ -151,6 +155,9 @@ Player.prototype.move = function() {
             app.tutZombie.death();
             app.killEffect.play();
           }
+        }
+        app.shootEffect.play();
+        this.shootTimer = 0;
       }
+    }
   }
-}
