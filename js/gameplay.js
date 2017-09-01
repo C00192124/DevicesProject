@@ -23,6 +23,10 @@ var limit;
 var boltImg;
 var boltAlive = true;
 var boltTimer;
+var boltX;
+var boltY;
+var youWin = false;
+var score;
 
 addEventListener("keydown", keyDown);
 
@@ -36,6 +40,8 @@ function keyDown(e) {
     }
     if(e.keyCode === 13 && gameOver) {
         gameOver = false;
+        levelTwo = false;
+        app.score = 0;
         app.game = new Gameplay();
     }
   }
@@ -53,6 +59,8 @@ function Gameplay() {
   app.kills = 0;
   this.limit = 320;
   this.boltTimer = 0;
+  this.boltX = 200;
+  this.boltY = 200;
 
   level = {
     "levelOne": [
@@ -101,7 +109,7 @@ function Gameplay() {
 Gameplay.prototype.update = function() {
 
   if(playGame){
-    if(!gameOver) {
+    if(!gameOver && !youWin) {
       if(!levelTwo){
         for(i = 0; i < app.zombie.length; i++) {
           if(app.zombie[i].dead){
@@ -128,10 +136,11 @@ Gameplay.prototype.update = function() {
           }
         }
 
-        if(app.kills === 20) {
+        if(app.kills >= 20 && !levelTwo) {
           levelTwo = true;
-          this.kills = 0;
+          app.kills = 0;
           this.boltTimer = 0;
+          app.score += this.livesNo;
           app.game = new Gameplay();
         }
       }
@@ -161,6 +170,10 @@ Gameplay.prototype.update = function() {
           if(this.limit > 80) {
             this.limit -= 20;
           }
+        }
+        if(app.kills >= 25 && levelTwo) {
+          app.score += this.livesNo;
+          youWin = true;
         }
       }
     }
@@ -197,8 +210,8 @@ if(!levelTwo){
           }
         }
       }
-      if(app.player.x < 200 + 46 && app.player.x > 200
-      && app.player.y < 200 + 46 && app.player.y > 200 && boltAlive){
+      if(app.player.x < this.boltX + 46 && app.player.x > this.boltX
+      && app.player.y < this.boltY + 46 && app.player.y > this.boltY && boltAlive){
         boltAlive = false;
         this.boltTimer = 0;
       }
@@ -233,14 +246,14 @@ if(!levelTwo){
   }
 
   app.ctx.fillStyle = "rgb(255, 255, 255)";
-  app.ctx.font = "56px Roboto";
+  app.ctx.font = "56px rubik";
   app.ctx.textAlign = "left";
   app.ctx.textBaseline = "top";
   app.ctx.fillText("" + Math.round(this.livesNo), 0,0);
-  app.ctx.fillText("Kills:" + app.kills, app.canvas.width - 200 ,0);
+  app.ctx.fillText("Kills:" + app.kills, app.canvas.width - 250 ,0);
 
   if(gameOver) {
-    app.ctx.font = "36px Roboto";
+    app.ctx.font = "24px rubik";
     app.ctx.textAlign = "center";
     app.ctx.textBaseline = "middle";
     app.ctx.fillText("Game Over, Esc to Exit, Return to Retry", app.canvas.width/2,app.canvas.height/2);
@@ -280,27 +293,37 @@ if(!levelTwo){
    }
 
    if(boltAlive){
-     app.ctx.drawImage(app.boltImg, 200, 200);
+     app.ctx.drawImage(app.boltImg, this.boltX, this.boltY);
    }
    else {
      this.boltTimer++;
      if(this.boltTimer > 300){
        boltAlive = true;
+       this.boltX = Math.random() * ((app.canvas.width - 128) - 128) + 128;
+       this.boltY = Math.random() * ((app.canvas.height - 128) - 128) + 128;
      }
    }
 
    app.ctx.fillStyle = "rgb(255, 255, 255)";
-   app.ctx.font = "56px Roboto";
+   app.ctx.font = "56px rubik";
    app.ctx.textAlign = "left";
    app.ctx.textBaseline = "top";
    app.ctx.fillText("" + Math.round(this.livesNo), 0,0);
-   app.ctx.fillText("Kills:" + app.kills, app.canvas.width - 200 ,0);
+   app.ctx.fillText("Kills:" + app.kills, app.canvas.width - 250 ,0);
 
    if(gameOver) {
-     app.ctx.font = "36px Roboto";
+     app.ctx.font = "24px rubik";
      app.ctx.textAlign = "center";
      app.ctx.textBaseline = "middle";
-     app.ctx.fillText("Game Over, Esc to Exit, Return to Retry", app.canvas.width/2,app.canvas.height/2);
+     app.ctx.fillText("So Close! Esc to Exit, Return to Retry", app.canvas.width/2,app.canvas.height/2);
+   }
+
+   if(youWin) {
+     app.ctx.font = "24px rubik";
+     app.ctx.textAlign = "center";
+     app.ctx.textBaseline = "middle";
+     app.ctx.fillText("You Win! Your score was " + Math.round(app.score), app.canvas.width/2,app.canvas.height/2);
+     app.ctx.fillText("Esc to Exit, Return to Retry", app.canvas.width/2,app.canvas.height/2 + 50);
    }
  }
 
@@ -309,30 +332,8 @@ if(!levelTwo){
 Gameplay.prototype.pushZombie = function() {
 
   app.zomInit = new Zombie();
-  if(this.spawn) {
-    if(!this.corner) {
-      app.zomInit.init({imagePath:"assets/zombie/move/move_right.png",x:app.canvas.width - 128,y:64});
-      this.spawn = false;
-      this.corner = false;
-    }
-    else {
-      app.zomInit.init({imagePath:"assets/zombie/move/move_right.png",x:64,y:64});
-      this.spawn = false;
-      this.corner = true;
-    }
-  }
-  else {
-    if(this.corner) {
-      app.zomInit.init({imagePath:"assets/zombie/move/move_left.png", x:app.canvas.width - 128, y:app.canvas.height - 128});
-      this.spawn = true;
-      this.corner = false;
-    }
-    else {
-      app.zomInit.init({imagePath:"assets/zombie/move/move_left.png", x:64, y:app.canvas.height - 128});
-      this.spawn = true;
-      this.corner = true;
-    }
-  }
+  app.zomInit.init({imagePath:"assets/zombie/move/move_right.png",x:Math.random() * ((app.canvas.width - 128) - 128) + 128,
+   y:Math.random() * ((app.canvas.height - 128) - 128) + 128});
   app.zombie.push(app.zomInit);
 
 }

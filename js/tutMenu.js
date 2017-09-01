@@ -45,6 +45,7 @@ function clickTut(e) {
     && (tY < (app.canvas.height / 2) + 50) && (tY > (app.canvas.height / 2) - 50)) {
       app.game = new Gameplay();
       levelTwo = false;
+      app.score = 0;
       bTutorialMenu = false;
       playGame = true;
     }
@@ -110,7 +111,7 @@ TutMenu.prototype.draw = function() {
   }
 
   app.ctx.fillStyle = "rgb(255, 255, 255)";
-  app.ctx.font = "56px Roboto";
+  app.ctx.font = "56px rubik";
   app.ctx.textAlign = "left";
 	app.ctx.textBaseline = "top";
 	app.ctx.fillText("Esc to Exit", 0, 0);

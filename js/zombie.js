@@ -40,44 +40,44 @@ Zombie.prototype.zombieChase = function() {
 
   if(this.isLoaded == true) {
     if(!levelTwo){
+      if (app.player.y > this.y) {
+         this.y = this.y + 0.5;
+         this.image.src = "assets/zombie/move/move_down.png";
+       }
+
+       if (app.player.y < this.y) {
+         this.y = this.y - 0.5;
+         this.image.src = "assets/zombie/move/move_up.png";
+       }
+
       if (app.player.x > this.x) {
         this.x = this.x + 0.5;
         this.image.src = "assets/zombie/move/move_right.png";
-      }
-
-      if (app.player.y > this.y) {
-        this.y = this.y + 0.5;
-        this.image.src = "assets/zombie/move/move_down.png";
       }
 
       if (app.player.x < this.x) {
         this.x = this.x - 0.5;
         this.image.src = "assets/zombie/move/move_left.png";
       }
-
-      if (app.player.y < this.y) {
-        this.y = this.y - 0.5;
-        this.image.src = "assets/zombie/move/move_up.png";
-      }
     }
     else {
       if (app.player.x > this.x) {
-        this.x = this.x + 1;
+        this.x = this.x + 0.75;
         this.image.src = "assets/zombie/move/move_right.png";
       }
 
       if (app.player.y > this.y) {
-        this.y = this.y + 1;
+        this.y = this.y + 0.75;
         this.image.src = "assets/zombie/move/move_down.png";
       }
 
       if (app.player.x < this.x) {
-        this.x = this.x - 1;
+        this.x = this.x - 0.75;
         this.image.src = "assets/zombie/move/move_left.png";
       }
 
       if (app.player.y < this.y) {
-        this.y = this.y - 1;
+        this.y = this.y - 0.75;
         this.image.src = "assets/zombie/move/move_up.png";
       }
     }

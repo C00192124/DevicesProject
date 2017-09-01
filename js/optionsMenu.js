@@ -104,7 +104,7 @@ OptionsMenu.prototype.draw = function() {
   }
 
   app.ctx.fillStyle = "rgb(255, 255, 255)";
-	app.ctx.font = "56px Roboto";
+	app.ctx.font = "56px rubik";
 	app.ctx.textAlign = "center";
 	app.ctx.textBaseline = "middle";
 	app.ctx.fillText("" + volumeNo, app.canvas.width / 2, ((app.canvas.height / 3) * 2));
